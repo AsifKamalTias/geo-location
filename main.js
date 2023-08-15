@@ -20,11 +20,11 @@ if (navigator.geolocation) {
         }
 
     }, (error) => {
-        console.log(error);
+        alert(`ERROR(${err.code}): ${err.message}`);
     }, {
         enableHighAccuracy: true
     });
 }
 else {
-    alert(`Geolocation is not supported by this system. `)
+    alert(`Geolocation is not supported by this system.`)
 }
