@@ -1,9 +1,30 @@
-var map = L.map('map').setView([51.505, -0.09], 13);
+if (navigator.geolocation) {
+    let lat, long;
+    window.navigator.geolocation.getCurrentPosition((position) => {
+        lat = position.coords.latitude;
+        long = position.coords.longitude;
 
-L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    maxZoom: 19,
-    attribution: '© OpenStreetMap'
-}).addTo(map);
+        if (lat !== undefined && long !== undefined) {
+            let map = L.map('map').setView([lat, long], 15);
 
-var marker = L.marker([51.5, -0.09]).addTo(map);
-marker.bindPopup("<b>Hello world!</b><br>I am a popup.").openPopup();
+            L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                maxZoom: 19,
+                attribution: 'ASIF KAMAL TIAS'
+            }).addTo(map);
+
+            const marker = L.marker([lat, long]).addTo(map);
+            marker.bindPopup("<strong>Here is you.</strong>").openPopup();
+        }
+        else {
+            alert('Please turn on your location.');
+        }
+
+    }, (error) => {
+        console.log(error);
+    }, {
+        enableHighAccuracy: true
+    });
+}
+else {
+    alert(`Geolocation is not supported by this system. `)
+}
